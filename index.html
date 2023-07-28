@@ -1,23 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JavaScript QUiz</title>
+    <title>JavaScript Quiz</title>
     <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
+
+<!-- Quiz -->
 <div class="app">
     <h1>Simple Quiz</h1>
     <div class="quiz">
-        <h2 id="question">Question gpes here</h2>
+        <h2 id="question">Question goes here</h2>
         <div id="answer-buttons">
             <button class="btn">Answer 1</button>
             <button class="btn">Answer 2</button>
             <button class="btn">Answer 3</button>
             <button class="btn">Answer 4</button>
         </div>
-        <button id="next-btn"Next></button>
+        <button id="next-btn">Next></button>
     </div>
 </div>
+
+<!-- high score -->
+<div id="high-score-page" style="display: none;">
+    <h2>High Scores</h2>
+    <ol id="high-scores-list"></ol>
+    <div>
+        <input type="text" id="player-name" placeholder="Enter your name">
+        <button id="save-score-btn">Save Score</button>
+        <button id="play-again-btn">Play Again</button>
+    </div>
+</div>
+
 <script src="./style.js"></script>
 </body>
 </html> 
