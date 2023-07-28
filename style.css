@@ -1,14 +1,14 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Courier New', Courier, monospace;
     box-sizing: border-box;
 }
 
 body{
     background: rgb(151, 253, 253);
 }
-
+/* the background behind the questions */
 .app{
     background: white;
     width: 90%;
@@ -17,7 +17,7 @@ body{
     border-radius: 10px;
     padding: 30px;
 }
-
+/* the wording */
 .app h1{
     font-size: 25px;
     color: lightpink;
@@ -35,7 +35,7 @@ body{
    color: lightpink; 
    font-weight: 600;
 }
-
+/* the answer button */
 .btn{
     background: white;
     color: rgb(9, 18, 138);
@@ -49,7 +49,7 @@ body{
     cursor: pointer;
     transition: all 0.3s;
 }
-
+/* to make it turn blue */
 .btn:hover:not([disabled]){
     background: #6fb0fa;
     color: #fff;
@@ -71,16 +71,16 @@ body{
     cursor: pointer;
     display: none;
 }
-
+/* if its correct */
 .correct{
     background: rgb(2, 179, 11);
 }
-
+/* if its incorrect */
 .incorrect{
     background: rgb(250, 71, 71);
 }
 
-/* Add this style for the high score page */
+/* Add style for the high score page */
 #high-score-page {
     text-align: center;
     color:lightpink

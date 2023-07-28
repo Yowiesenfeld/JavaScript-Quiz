@@ -1,4 +1,4 @@
-
+// these are the quiz questions
 const questions = [
     {
         question: "What does CSS stand for?",
@@ -48,19 +48,25 @@ const answerButtons = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
 const highScorePage = document.getElementById("high-score-page");
 const highScoresList = document.getElementById("high-scores-list");
-
+const timerElement = document.getElementById("time-remaining");
+const totalTime = 60; 
+let timeRemaining = totalTime;
+let timerInterval;
 let currentQuestionIndex = 0;
 let score = 0;
 let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
 
 function startQuiz() {
     currentQuestionIndex = 0;
     score = 0;
     nextButton.innerHTML = "Next";
-    highScorePage.style.display = "none"; 
+    highScorePage.style.display = "none"
+    timeRemaining = totalTime;
+    timerInterval = setInterval(updateTimer, 1000); 
     showQuestion();
 }
-
+ 
 function showQuestion() {
     resetState();
     if (currentQuestionIndex >= questions.length) {
@@ -90,15 +96,30 @@ function resetState() {
     }
 }
 
+function updateTimer() {
+    timeRemaining--;
+    timerElement.textContent = timeRemaining + " seconds";
+
+    if (timeRemaining <= 0) {
+        clearInterval(timerInterval);
+        showScore();
+    }
+}
+
 function selectAnswer(e) {
     const selectedBtn = e.target;
     const isCorrect = selectedBtn.dataset.correct === "true";
+  ;
     if (isCorrect) {
         selectedBtn.classList.add("correct");
         score++;
     } else {
         selectedBtn.classList.add("incorrect");
     }
+
+    if (timeRemaining <= 0) {
+        return;
+
     Array.from(answerButtons.children).forEach((button) => {
         if (button.dataset.correct === "true") {
             button.classList.add("correct");
@@ -114,12 +135,18 @@ function showScore() {
     nextButton.innerHTML = "Play Again";
     nextButton.style.display = "block";
     highScorePage.style.display = "block"; 
+    timerElement.textContent = "Time's up!";
     showHighScorePage();
+}
 }
 
 function handleNextButton() {
     currentQuestionIndex++;
         showQuestion();
+    if (currentQuestionIndex >= questions.length) {
+        clearInterval(timerInterval);
+        showScore();
+    }   
 }
 
 nextButton.addEventListener("click", () => {
@@ -130,7 +157,7 @@ nextButton.addEventListener("click", () => {
     }
 });
 
-
+// high score
 function showHighScores() {
     highScores.sort((a, b) => b.score - a.score);
     highScoresList.innerHTML = highScores
@@ -155,7 +182,7 @@ function saveHighScore() {
 
     showHighScores();
 }
-
+// save the score
 document.getElementById("save-score-btn").addEventListener("click", saveHighScore);
 
 document.getElementById("play-again-btn").addEventListener("click", () => {
