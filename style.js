@@ -48,25 +48,19 @@ const answerButtons = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
 const highScorePage = document.getElementById("high-score-page");
 const highScoresList = document.getElementById("high-scores-list");
-const timerElement = document.getElementById("time-remaining");
-const totalTime = 60; 
-let timeRemaining = totalTime;
-let timerInterval;
+
 let currentQuestionIndex = 0;
 let score = 0;
 let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-
-
+// the next button
 function startQuiz() {
     currentQuestionIndex = 0;
     score = 0;
     nextButton.innerHTML = "Next";
-    highScorePage.style.display = "none"
-    timeRemaining = totalTime;
-    timerInterval = setInterval(updateTimer, 1000); 
+    highScorePage.style.display = "none"; 
     showQuestion();
 }
- 
+// the score 
 function showQuestion() {
     resetState();
     if (currentQuestionIndex >= questions.length) {
@@ -95,31 +89,16 @@ function resetState() {
         answerButtons.removeChild(answerButtons.firstChild);
     }
 }
-
-function updateTimer() {
-    timeRemaining--;
-    timerElement.textContent = timeRemaining + " seconds";
-
-    if (timeRemaining <= 0) {
-        clearInterval(timerInterval);
-        showScore();
-    }
-}
-
+// if correct and if not
 function selectAnswer(e) {
     const selectedBtn = e.target;
     const isCorrect = selectedBtn.dataset.correct === "true";
-  ;
     if (isCorrect) {
         selectedBtn.classList.add("correct");
         score++;
     } else {
         selectedBtn.classList.add("incorrect");
     }
-
-    if (timeRemaining <= 0) {
-        return;
-
     Array.from(answerButtons.children).forEach((button) => {
         if (button.dataset.correct === "true") {
             button.classList.add("correct");
@@ -128,25 +107,19 @@ function selectAnswer(e) {
     });
     nextButton.style.display = "block";
 }
-
+// see your score and play again
 function showScore() {
     resetState();
     questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
     nextButton.innerHTML = "Play Again";
     nextButton.style.display = "block";
     highScorePage.style.display = "block"; 
-    timerElement.textContent = "Time's up!";
     showHighScorePage();
-}
 }
 
 function handleNextButton() {
     currentQuestionIndex++;
         showQuestion();
-    if (currentQuestionIndex >= questions.length) {
-        clearInterval(timerInterval);
-        showScore();
-    }   
 }
 
 nextButton.addEventListener("click", () => {
